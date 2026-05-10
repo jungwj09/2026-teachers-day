@@ -6,6 +6,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: "GmarketSns";
   src: url('/fonts/GmarketSansTTF/GmarketSansTTFMedium.ttf') format('truetype');
@@ -13,6 +14,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: "GmarketSns";
   src: url('/fonts/GmarketSansTTF/GmarketSansTTFBold.ttf') format('truetype');
@@ -118,35 +120,6 @@ body {
   color: var(--ink);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
-}
-
-/* Stationery: 검정색 ruled lines */
-.letter-textarea {
-  box-sizing: content-box;
-  background-image: repeating-linear-gradient(transparent,
-      transparent 30px,
-      rgba(0, 0, 0, 0.55) 30px,
-      rgba(0, 0, 0, 0.55) 32px);
-  background-size: 100% 30px;
-  background-position: left 14px top;
-  line-height: 30px;
-  padding-top: 14px;
-  padding-bottom: 10px;
-  padding-left: 10px;
-  border-radius: 6px;
-  font-family: var(--font-handwriting);
-  font-size: 1.06rem;
-  max-height: 60vh;
-  overflow: auto;
-  min-height: calc(30px * 4 + 20px);
-}
-
-.letter-textarea::placeholder {
-  color: var(--ink-faint);
-  font-family: var(--font-handwriting);
-  font-size: 1.06rem;
-  line-height: 30px;
-  padding-top: 0;
 }
 
 .font-handwriting {
