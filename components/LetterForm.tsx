@@ -30,8 +30,16 @@ export default function LetterForm() {
     if (!ruler || !input) return;
 
     if (teacherName.length === 0) {
+      // placeholder 스타일을 ruler에 적용하여 정확한 너비 측정
+      ruler.style.fontFamily = "var(--font-handwriting)";
+      ruler.style.fontWeight = "normal";
+      ruler.style.fontSize = "1.125rem";
       ruler.textContent = "선생님 성함을 입력하세요";
     } else {
+      // 실제 입력된 텍스트 스타일을 ruler에 적용
+      ruler.style.fontFamily = "var(--font-display)";
+      ruler.style.fontWeight = "500";
+      ruler.style.fontSize = "1.125rem";
       ruler.textContent = teacherName;
     }
 
