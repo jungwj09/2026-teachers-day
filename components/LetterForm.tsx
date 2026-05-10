@@ -157,9 +157,7 @@ export default function LetterForm() {
             animate-[fadeUp_0.6s_0.1s_ease_both]
           "
         >
-          <div className="absolute left-8 top-6 w-12 h-12 bg-gradient-to-br from-carnation-light to-transparent rounded-full opacity-30 pointer-events-none" />
-
-          <div className="px-4 pb-4 pt-4 md:px-8 md:pb-8 md:pt-6 space-y-6 stationery">
+          <div className="px-4 pb-4 pt-4 md:px-8 md:pb-8 md:pt-6 space-y-4 stationery">
 
             <div className="relative">
               <label className="font-handwriting text-ink-faint text-sm block mb-1">
@@ -204,7 +202,7 @@ export default function LetterForm() {
                 ref={textareaRef}
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                placeholder={"선생님께 전하고 싶은 말을 자유롭게 적어보세요.\n\n감사했던 순간, 기억에 남는 말 한마디,\n앞으로의 바람 등 무엇이든 좋아요 :)"}
+                placeholder={"선생님께 전하고 싶은 말을 자유롭게 적어보세요.\n감사했던 순간, 기억에 남는 말 한마디,\n앞으로의 바람 등 무엇이든 좋아요 :)"}
                 rows={8}
                 maxLength={1000}
                 className="
