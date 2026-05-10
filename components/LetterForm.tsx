@@ -159,7 +159,7 @@ export default function LetterForm() {
         >
           <div className="absolute left-8 top-6 w-12 h-12 bg-gradient-to-br from-carnation-light to-transparent rounded-full opacity-30 pointer-events-none" />
 
-          <div className="px-8 pb-8 pt-6 space-y-6 stationery">
+          <div className="px-4 pb-4 pt-4 md:px-8 md:pb-8 md:pt-6 space-y-6 stationery">
 
             <div className="relative">
               <label className="font-handwriting text-ink-faint text-sm block mb-1">
@@ -212,7 +212,7 @@ export default function LetterForm() {
                   w-full bg-transparent resize-none
                   font-handwriting text-ink text-base leading-7
                   focus:outline-none
-                  pl-3 py-3
+                  px-4 md:px-8
                 "
               />
               <p className="text-right font-body text-ink-faint text-xs mt-1">

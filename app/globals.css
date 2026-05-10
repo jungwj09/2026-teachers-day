@@ -6,6 +6,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: "GmarketSns";
   src: url('/fonts/GmarketSansTTF/GmarketSansTTFMedium.ttf') format('truetype');
@@ -13,6 +14,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: "GmarketSns";
   src: url('/fonts/GmarketSansTTF/GmarketSansTTFBold.ttf') format('truetype');
@@ -122,7 +124,7 @@ body {
 
 /* Stationery: 검정색 ruled lines */
 .letter-textarea {
-  box-sizing: content-box;
+  box-sizing: border-box; /* border-box로 변경 -> w-full + padding이 너비 안에서 처리됨 */
   background-image: repeating-linear-gradient(transparent,
       transparent 30px,
       rgba(0, 0, 0, 0.55) 30px,
@@ -132,7 +134,6 @@ body {
   line-height: 30px;
   padding-top: 14px;
   padding-bottom: 10px;
-  padding-left: 10px;
   border-radius: 6px;
   font-family: var(--font-handwriting);
   font-size: 1.06rem;
