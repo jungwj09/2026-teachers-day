@@ -2,12 +2,10 @@
 
 import Image from "next/image";
 import { useUser } from "@/hooks/useUser";
-import { useRouter } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 
 export default function LetterForm() {
   const { user } = useUser();
-  const router = useRouter();
 
   const [teacherName, setTeacherName] = useState("");
   const [content, setContent] = useState("");
@@ -15,13 +13,31 @@ export default function LetterForm() {
   const [errorMsg, setErrorMsg] = useState("");
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const rulerRef = useRef<HTMLSpanElement | null>(null);
+
   useEffect(() => {
     const el = textareaRef.current;
     if (!el) return;
-    // auto-grow: set to auto first, then size to scrollHeight to avoid cumulative offsets
     el.style.height = "auto";
     el.style.height = `${el.scrollHeight}px`;
   }, [content]);
+
+  // input 너비를 내용/placeholder에 맞춰 동적으로 조절
+  useEffect(() => {
+    const ruler = rulerRef.current;
+    const input = inputRef.current;
+    if (!ruler || !input) return;
+
+    if (teacherName.length === 0) {
+      ruler.textContent = "선생님 성함을 입력하세요";
+    } else {
+      ruler.textContent = teacherName;
+    }
+
+    const width = ruler.offsetWidth;
+    input.style.width = `${width + 4}px`;
+  }, [teacherName]);
 
   const handleSubmit = async () => {
     if (!teacherName.trim() || !content.trim()) {
@@ -54,7 +70,6 @@ export default function LetterForm() {
     }
   };
 
-  // 성공 화면
   if (status === "success") {
     return (
       <div className="min-h-screen bg-cream-50 flex items-center justify-center px-4">
@@ -69,7 +84,7 @@ export default function LetterForm() {
             priority
           />
           <h2 className="font-display text-3xl text-ink font-bold mb-3">
-            편지가 전달되었어요 💌
+            편지가 전달되었어요
           </h2>
           <p className="font-body text-ink-light mb-8">
             {teacherName} 선생님께 감사의 마음이 닿길 바랍니다.
@@ -91,6 +106,21 @@ export default function LetterForm() {
 
   return (
     <div className="min-h-screen bg-cream-50 flex items-center justify-center px-4 py-12">
+      {/* 너비 측정용 숨김 span (input과 동일한 폰트) */}
+      <span
+        ref={rulerRef}
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          visibility: "hidden",
+          whiteSpace: "pre",
+          fontFamily: "var(--font-display)",
+          fontSize: "1.125rem",
+          fontWeight: 500,
+          pointerEvents: "none",
+        }}
+      />
+
       <div className="w-full max-w-2xl">
 
         <div className="flex items-center gap-2 mb-8 animate-[fadeUp_0.5s_ease_forwards]">
@@ -127,41 +157,38 @@ export default function LetterForm() {
               <label className="font-handwriting text-ink-faint text-sm block mb-1">
                 받는 분
               </label>
-              <div className="flex items-center gap-2">
+              <div className="flex items-baseline gap-2">
                 <span className="font-display font-semibold text-ink text-lg shrink-0">
                   TO.
                 </span>
-                <div className="relative flex-1">
+                {/* input + '선생님' suffix를 하나의 밑줄 컨테이너로 감쌈 */}
+                <div
+                  className="inline-flex items-baseline pb-1"
+                  style={{ borderBottom: "1px solid #c0392b" }}
+                >
                   <input
+                    ref={inputRef}
                     type="text"
                     value={teacherName}
                     onChange={(e) => setTeacherName(e.target.value)}
                     placeholder="선생님 성함을 입력하세요"
                     maxLength={20}
+                    style={{ minWidth: 0 }}
                     className="
-                      w-full bg-transparent
-                      font-display text-base md:text-lg font-medium text-ink
-                      border-b border-cream-300
-                      focus:border-carnation focus:outline-none
-                      pb-1 transition-colors duration-200
+                      bg-transparent
+                      font-display text-lg font-medium text-ink
+                      focus:outline-none
+                      transition-colors duration-200
                       placeholder:text-ink-faint placeholder:font-handwriting placeholder:font-normal placeholder:text-lg
                     "
                   />
-                  <span className="absolute right-0 bottom-2 font-display text-ink text-sm opacity-70">
-                    선생님
-                  </span>
+                  {teacherName.length > 0 && (
+                    <span className="font-display text-lg font-medium text-ink ml-0.5 shrink-0">
+                      선생님
+                    </span>
+                  )}
                 </div>
               </div>
-            </div>
-
-            <div className="text-right">
-              <span className="font-handwriting text-ink-faint text-sm">
-                {new Date().toLocaleDateString("ko-KR", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </span>
             </div>
 
             <div>
@@ -230,9 +257,7 @@ export default function LetterForm() {
                   <span>전송 중...</span>
                 </>
               ) : (
-                <>
-                  <span className="text-cream text-sm">편지 보내기</span>
-                </>
+                <span className="text-cream text-sm">편지 보내기</span>
               )}
             </button>
           </div>

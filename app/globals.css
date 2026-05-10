@@ -20,9 +20,10 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: "온글잎 긍정";
-  src: url('/fonts/온글잎 긍정.ttf') format('truetype');
+  src: url('/fonts/온글잎 긍정.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -92,6 +93,7 @@
   }
 
   @keyframes float {
+
     0%,
     100% {
       transform: translateY(0px);
@@ -118,15 +120,13 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Stationery: subtle ruled lines and comfortable spacing */
+/* Stationery: 검정색 ruled lines */
 .letter-textarea {
   box-sizing: content-box;
-  background-image: repeating-linear-gradient(
-    transparent,
-    transparent 30px,
-    rgba(140, 100, 70, 0.40) 30px,
-    rgba(140, 100, 70, 0.40) 32px
-  );
+  background-image: repeating-linear-gradient(transparent,
+      transparent 30px,
+      rgba(0, 0, 0, 0.55) 30px,
+      rgba(0, 0, 0, 0.55) 32px);
   background-size: 100% 30px;
   background-position: left 14px top;
   line-height: 30px;
@@ -135,33 +135,30 @@ body {
   padding-left: 10px;
   border-radius: 6px;
   font-family: var(--font-handwriting);
-  font-size: 1.06rem; /* handwriting body size */
-  max-height: 60vh; /* allow card to grow but keep viewport under control */
+  font-size: 1.06rem;
+  max-height: 60vh;
   overflow: auto;
-  min-height: calc(30px * 4 + 20px); /* show about 4 ruled lines by default */
+  min-height: calc(30px * 4 + 20px);
 }
 
 .letter-textarea::placeholder {
   color: var(--ink-faint);
   font-family: var(--font-handwriting);
-  font-size: 1.06rem; /* match body size so placeholder aligns vertically */
-  line-height: 30px; /* match textarea line-height for vertical alignment */
-  padding-top: 0; /* rely on textarea padding instead */
+  font-size: 1.06rem;
+  line-height: 30px;
+  padding-top: 0;
 }
 
-/* make handwriting labels a touch larger for parity */
 .font-handwriting {
   font-family: var(--font-handwriting);
   font-size: 1.14rem;
 }
 
-/* Improve primary button contrast and depth */
 button.bg-ink {
   background: linear-gradient(180deg, var(--ink) 0%, #24110a 100%);
   color: var(--cream-50);
 }
 
-/* Shadows used on stationery cards */
 .shadow-letter {
   box-shadow: var(--shadow-letter);
 }
@@ -192,6 +189,7 @@ button.bg-ink {
 }
 
 @keyframes dotBlink {
+
   0%,
   80%,
   100% {
