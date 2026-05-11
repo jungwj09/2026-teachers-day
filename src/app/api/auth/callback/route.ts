@@ -1,5 +1,5 @@
-import { createClient } from "@/lib/supabase/server";
-import { isAllowedEmail } from "@/lib/utils";
+import { createClient } from "@/src/lib/supabase/server";
+import { isAllowedEmail } from "@/src/lib/utils";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {

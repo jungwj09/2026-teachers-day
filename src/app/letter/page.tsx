@@ -1,7 +1,7 @@
-import LetterForm from "@/components/LetterForm";
-import { createClient } from "@/lib/supabase/server";
+import LetterForm from "@/src/components/LetterForm";
+import { createClient } from "@/src/lib/supabase/server";
 import { redirect } from "next/navigation";
-import Footer from "@/components/Footer";
+import Footer from "@/src/components/Footer";
 
 export default async function LetterPage() {
   const supabase = await createClient();
