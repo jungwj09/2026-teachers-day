@@ -1,7 +1,7 @@
-import LoginButton from "@/components/LoginButton";
-import Footer from "@/components/Footer";
+import LoginButton from "@/src/components/LoginButton";
+import Footer from "@/src/components/Footer";
 import Image from "next/image";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/src/lib/supabase/server";
 import { redirect } from "next/navigation";
 
 interface PageProps {
@@ -24,7 +24,7 @@ export default async function HomePage({ searchParams }: PageProps) {
 
       <div className="relative z-10 flex flex-col items-center gap-2 animate-[fadeUp_0.6s_ease_forwards]" style={{ opacity: 0 }}>
         <Image
-          src="/carnation.svg"
+          src="/images/carnation.svg"
           alt="카네이션"
           width={112}
           height={144}

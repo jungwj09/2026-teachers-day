@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useUser } from "@/hooks/useUser";
+import { useUser } from "@/src/hooks/useUser";
 import { useState, useRef, useEffect } from "react";
 
 const LINE_HEIGHT = 42;
@@ -87,7 +87,7 @@ export default function LetterForm() {
     return (
       <div className="min-h-screen bg-cream-50 flex items-center justify-center px-4">
         <div className="text-center animate-[fadeUp_0.6s_ease_forwards]">
-          <Image src="/carnation.svg" alt="카네이션" width={128} height={160}
+          <Image src="/images/carnation.svg" alt="카네이션" width={128} height={160}
             className="w-32 h-40 mx-auto mb-6 animate-float" loading="eager" priority />
           <h2 className="font-display text-3xl text-ink font-bold mb-3">편지가 전달되었어요</h2>
           <p className="font-body text-ink-light mb-8">
@@ -119,7 +119,7 @@ export default function LetterForm() {
       <div className="flex-1 flex items-center justify-center">
         <div className="w-full max-w-2xl">
         <div className="flex items-center gap-2 mb-8 animate-[fadeUp_0.5s_ease_forwards]">
-          <Image src="/carnation.svg" alt="카네이션" width={64} height={80}
+          <Image src="/images/carnation.svg" alt="카네이션" width={64} height={80}
             className="w-16 h-20 animate-float shrink-0" loading="eager" priority />
           <div>
             <p className="font-handwriting text-ink-faint text-lg">스승의 날</p>

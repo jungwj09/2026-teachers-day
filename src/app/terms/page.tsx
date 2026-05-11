@@ -8,7 +8,7 @@ export default function TermsPage() {
 
         <div className="flex items-center gap-3 mb-10 animate-[fadeUp_0.5s_ease_forwards]" style={{ opacity: 0 }}>
           <Link href="/" className="shrink-0">
-            <Image src="/carnation.svg" alt="홈으로" width={36} height={44} className="w-9 h-11 opacity-80 hover:opacity-100 transition-opacity" />
+            <Image src="/images/carnation.svg" alt="홈으로" width={36} height={44} className="w-9 h-11 opacity-80 hover:opacity-100 transition-opacity" />
           </Link>
           <div>
             <p className="font-handwriting text-ink-faint text-sm">2026 스승의 날</p>
