@@ -1,6 +1,7 @@
 import LetterForm from "@/components/LetterForm";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import Footer from "@/components/Footer";
 
 export default async function LetterPage() {
   const supabase = await createClient();
@@ -10,5 +11,10 @@ export default async function LetterPage() {
 
   if (!user) redirect("/");
 
-  return <LetterForm />;
+  return (
+    <>
+      <LetterForm />
+      <Footer />
+    </>
+  );
 }

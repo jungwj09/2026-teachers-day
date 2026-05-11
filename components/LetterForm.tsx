@@ -105,7 +105,7 @@ export default function LetterForm() {
   }
 
   return (
-    <div className="min-h-screen bg-cream-50 flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-cream-50 flex flex-col px-4 py-12">
       <span
         ref={rulerRef}
         aria-hidden="true"
@@ -116,7 +116,8 @@ export default function LetterForm() {
         }}
       />
 
-      <div className="w-full max-w-2xl">
+      <div className="flex-1 flex items-center justify-center">
+        <div className="w-full max-w-2xl">
         <div className="flex items-center gap-2 mb-8 animate-[fadeUp_0.5s_ease_forwards]">
           <Image src="/carnation.svg" alt="카네이션" width={64} height={80}
             className="w-16 h-20 animate-float shrink-0" loading="eager" priority />
@@ -209,6 +210,7 @@ export default function LetterForm() {
         </div>
 
         <p className="text-center font-body text-ink-faint text-xs mt-6">작성한 편지는 선생님들께 전달됩니다</p>
+        </div>
       </div>
     </div>
   );

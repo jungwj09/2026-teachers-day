@@ -1,4 +1,5 @@
 import LoginButton from "@/components/LoginButton";
+import Footer from "@/components/Footer";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
@@ -36,35 +37,29 @@ export default async function HomePage({ searchParams }: PageProps) {
         </p>
       </div>
 
-      <div className="relative z-10 text-center max-w-lg w-full flex flex-col items-center gap-3">
-        <div
-          className="animate-[fadeUp_0.6s_0.2s_ease_both]"
-          style={{ opacity: 0 }}
-        >
-          <h1 className="font-display text-4xl font-medium text-ink leading-tight">
-            선생님께<br />
-            <span className="text-carnation font-semibold">감사의 마음</span>을<br />
-            전해보세요
-          </h1>
+      <div className="relative z-10 flex flex-col items-center gap-8">
+        <div className="text-center max-w-lg w-full flex flex-col items-center gap-3">
+          <div className="animate-[fadeUp_0.6s_0.2s_ease_both]" style={{ opacity: 0 }}>
+            <h1 className="font-display text-4xl font-medium text-ink leading-tight">
+              선생님께<br />
+              <span className="text-carnation font-semibold">감사의 마음</span>을<br />
+              전해보세요
+            </h1>
+          </div>
+          <div className="animate-[fadeUp_0.6s_0.3s_ease_both]" style={{ opacity: 0 }}>
+            <p className="font-body text-ink-light text-base leading-relaxed">
+              스승의 날을 맞아, 우리를 가르쳐주신 선생님들께<br />
+              감사의 마음을 담은 편지를 전해보세요.
+            </p>
+          </div>
         </div>
 
-        <div
-          className="animate-[fadeUp_0.6s_0.3s_ease_both]"
-          style={{ opacity: 0 }}
-        >
-          <p className="font-body text-ink-light text-base leading-relaxed">
-            스승의 날을 맞아, 우리를 가르쳐주신 선생님들께<br />
-            감사의 마음을 담은 편지를 전해보세요.
-          </p>
+        <div className="relative z-10 animate-[fadeUp_0.6s_0.4s_ease_both]" style={{ opacity: 0 }}>
+          <LoginButton errorMessage={error} />
         </div>
       </div>
 
-      <div
-        className="relative z-10 animate-[fadeUp_0.6s_0.4s_ease_both]"
-        style={{ opacity: 0 }}
-      >
-        <LoginButton errorMessage={error} />
-      </div>
+      <Footer />
     </main>
   );
 }
