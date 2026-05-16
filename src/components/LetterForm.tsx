@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useUser } from "@/src/hooks/useUser";
+import { useEventClosed } from "@/src/hooks/useEventClosed";
 import { useState, useRef, useEffect } from "react";
 
 const LINE_HEIGHT = 42;
@@ -9,6 +10,7 @@ const DEFAULT_LINES = 8;
 
 export default function LetterForm() {
   const { user } = useUser();
+  const eventClosed = useEventClosed();
 
   const [teacherName, setTeacherName] = useState("");
   const [content, setContent] = useState("");
@@ -20,11 +22,9 @@ export default function LetterForm() {
   const rulerRef = useRef<HTMLSpanElement | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  // 입력에 따라 줄 수 동적 계산
   useEffect(() => {
     const el = textareaRef.current;
     if (!el) return;
-    // height를 auto로 줄였다가 scrollHeight로 실제 필요한 높이 측정
     el.style.height = "auto";
     const neededLines = Math.ceil(el.scrollHeight / LINE_HEIGHT);
     const newLineCount = Math.max(DEFAULT_LINES, neededLines);
@@ -32,20 +32,17 @@ export default function LetterForm() {
     el.style.height = `${newLineCount * LINE_HEIGHT}px`;
   }, [content]);
 
-  // input 너비를 내용 or placeholder에 맞춰 동적으로 조절
   useEffect(() => {
     const ruler = rulerRef.current;
     const input = inputRef.current;
     if (!ruler || !input) return;
 
     if (teacherName.length === 0) {
-      // placeholder 스타일을 ruler에 적용하여 정확한 너비 측정
       ruler.style.fontFamily = "var(--font-handwriting)";
       ruler.style.fontWeight = "normal";
       ruler.style.fontSize = "1.125rem";
       ruler.textContent = "선생님 성함을 입력하세요";
     } else {
-      // 실제 입력된 텍스트 스타일을 ruler에 적용
       ruler.style.fontFamily = "var(--font-display)";
       ruler.style.fontWeight = "500";
       ruler.style.fontSize = "1.125rem";
@@ -56,6 +53,7 @@ export default function LetterForm() {
   }, [teacherName]);
 
   const handleSubmit = async () => {
+    if (eventClosed) return;
     if (!teacherName.trim() || !content.trim()) {
       setErrorMsg("선생님 이름과 편지 내용을 입력해주세요.");
       return;
@@ -118,98 +116,99 @@ export default function LetterForm() {
 
       <div className="flex-1 flex items-center justify-center">
         <div className="w-full max-w-2xl">
-        <div className="flex items-center gap-2 mb-8 animate-[fadeUp_0.5s_ease_forwards]">
-          <Image src="/images/carnation.svg" alt="카네이션" width={64} height={80}
-            className="w-16 h-20 animate-float shrink-0" loading="eager" priority />
-          <div>
-            <p className="font-handwriting text-ink-faint text-lg">스승의 날</p>
-            <h1 className="font-display text-2xl font-bold text-ink leading-tight">선생님께 편지 쓰기</h1>
-          </div>
-        </div>
-
-        {/* 카드 전체가 늘어남 -> overflow-hidden 제거 */}
-        <div className="relative bg-cream-100 rounded-2xl shadow-letter animate-[fadeUp_0.6s_0.1s_ease_both]">
-          <div className="px-4 pb-4 pt-4 md:px-8 md:pb-8 md:pt-6 space-y-4">
-
+          <div className="flex items-center gap-2 mb-8 animate-[fadeUp_0.5s_ease_forwards]">
+            <Image src="/images/carnation.svg" alt="카네이션" width={64} height={80}
+              className="w-16 h-20 animate-float shrink-0" loading="eager" priority />
             <div>
-              <label className="font-handwriting text-ink-faint text-sm block mb-1">받는 분</label>
-              <div className="flex items-baseline gap-2">
-                <span className="font-display font-semibold text-ink text-lg shrink-0">TO.</span>
-                <div className="inline-flex items-baseline pb-1" style={{ borderBottom: "1px solid #c0392b" }}>
-                  <input
-                    ref={inputRef}
-                    type="text"
-                    value={teacherName}
-                    onChange={(e) => setTeacherName(e.target.value)}
-                    placeholder="선생님 성함을 입력하세요"
-                    maxLength={20}
-                    style={{ minWidth: 0 }}
-                    className="bg-transparent font-display text-lg font-medium text-ink focus:outline-none transition-colors duration-200 placeholder:text-ink-faint placeholder:font-handwriting placeholder:font-normal placeholder:text-lg"
-                  />
-                  {teacherName.length > 0 && (
-                    <span className="font-display text-lg font-medium text-ink ml-0.5 shrink-0">선생님</span>
-                  )}
-                </div>
-              </div>
+              <p className="font-handwriting text-ink-faint text-lg">스승의 날</p>
+              <h1 className="font-display text-2xl font-bold text-ink leading-tight">선생님께 편지 쓰기</h1>
             </div>
+          </div>
 
-            <div>
-              <div className="relative w-full" style={{ height: lineCount * LINE_HEIGHT }}>
-                <div className="absolute inset-0 pointer-events-none z-0 flex flex-col">
-                  {Array.from({ length: lineCount }).map((_, i) => (
-                    <div
-                      key={i}
-                      className="w-full shrink-0"
-                      style={{ height: LINE_HEIGHT, borderBottom: "1px solid rgba(0,0,0,0.18)" }}
+          <div className="relative bg-cream-100 rounded-2xl shadow-letter animate-[fadeUp_0.6s_0.1s_ease_both]">
+            <div className="px-4 pb-4 pt-4 md:px-8 md:pb-8 md:pt-6 space-y-4">
+
+              <div>
+                <label className="font-handwriting text-ink-faint text-sm block mb-1">받는 분</label>
+                <div className="flex items-baseline gap-2">
+                  <span className="font-display font-semibold text-ink text-lg shrink-0">TO.</span>
+                  <div className="inline-flex items-baseline pb-1" style={{ borderBottom: "1px solid #c0392b" }}>
+                    <input
+                      ref={inputRef}
+                      type="text"
+                      value={teacherName}
+                      onChange={(e) => setTeacherName(e.target.value)}
+                      placeholder="선생님 성함을 입력하세요"
+                      maxLength={20}
+                      disabled={eventClosed}
+                      style={{ minWidth: 0 }}
+                      className="bg-transparent font-display text-lg font-medium text-ink focus:outline-none transition-colors duration-200 placeholder:text-ink-faint placeholder:font-handwriting placeholder:font-normal placeholder:text-lg disabled:opacity-50"
                     />
-                  ))}
+                    {teacherName.length > 0 && (
+                      <span className="font-display text-lg font-medium text-ink ml-0.5 shrink-0">선생님</span>
+                    )}
+                  </div>
                 </div>
-
-                {/* textarea: overflow hidden, 높이 고정 */}
-                <textarea
-                  ref={textareaRef}
-                  value={content}
-                  onChange={(e) => setContent(e.target.value)}
-                  placeholder={"선생님께 전하고 싶은 말을 자유롭게 적어보세요.\n감사했던 순간, 기억에 남는 말 한마디,\n앞으로의 바람 등 무엇이든 좋아요 :)"}
-                  maxLength={1000}
-                  className="relative z-10 w-full h-full bg-transparent resize-none focus:outline-none overflow-hidden font-handwriting text-ink"
-                  style={{ lineHeight: `${LINE_HEIGHT}px`, paddingTop: 0 }}
-                />
               </div>
-              <p className="text-right font-body text-ink-faint text-xs mt-1">{content.length} / 1000</p>
-            </div>
 
-            <div className="border-t border-cream-300" />
-
-            <div>
-              <label className="font-handwriting text-ink-faint text-sm block mb-1">보내는 분</label>
-              <div className="flex items-center gap-2">
-                <span className="font-display font-semibold text-ink text-base shrink-0">From.</span>
-                <p className="font-display font-medium text-base md:text-lg text-ink pb-1">
-                  {user?.user_metadata?.full_name || user?.email?.split('@')[0] || '알 수 없음'}
-                </p>
+              <div>
+                <div className="relative w-full" style={{ height: lineCount * LINE_HEIGHT }}>
+                  <div className="absolute inset-0 pointer-events-none z-0 flex flex-col">
+                    {Array.from({ length: lineCount }).map((_, i) => (
+                      <div
+                        key={i}
+                        className="w-full shrink-0"
+                        style={{ height: LINE_HEIGHT, borderBottom: "1px solid rgba(0,0,0,0.18)" }}
+                      />
+                    ))}
+                  </div>
+                  <textarea
+                    ref={textareaRef}
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    placeholder={"선생님께 전하고 싶은 말을 자유롭게 적어보세요.\n감사했던 순간, 기억에 남는 말 한마디,\n앞으로의 바람 등 무엇이든 좋아요 :)"}
+                    maxLength={1000}
+                    disabled={eventClosed}
+                    className="relative z-10 w-full h-full bg-transparent resize-none focus:outline-none overflow-hidden font-handwriting text-ink disabled:opacity-50"
+                    style={{ lineHeight: `${LINE_HEIGHT}px`, paddingTop: 0 }}
+                  />
+                </div>
+                <p className="text-right font-body text-ink-faint text-xs mt-1">{content.length} / 1000</p>
               </div>
-            </div>
 
-            {(status === "error" || errorMsg) && (
-              <p className="font-body text-carnation text-sm bg-carnation-soft rounded-lg px-4 py-2">{errorMsg}</p>
-            )}
+              <div className="border-t border-cream-300" />
 
-            <button
-              onClick={handleSubmit}
-              disabled={status === "loading"}
-              className="group w-full bg-ink text-cream-50 font-display font-bold text-lg py-3 rounded-xl shadow-letter transition-all duration-300 hover:shadow-letter-hover hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3"
-            >
-              {status === "loading" ? (
-                <><span className="dot-flashing"><span /><span /><span /></span><span>전송 중...</span></>
-              ) : (
-                <span className="text-cream text-sm">편지 보내기</span>
+              <div>
+                <label className="font-handwriting text-ink-faint text-sm block mb-1">보내는 분</label>
+                <div className="flex items-center gap-2">
+                  <span className="font-display font-semibold text-ink text-base shrink-0">From.</span>
+                  <p className="font-display font-medium text-base md:text-lg text-ink pb-1">
+                    {user?.user_metadata?.full_name || user?.email?.split('@')[0] || '알 수 없음'}
+                  </p>
+                </div>
+              </div>
+
+              {(status === "error" || errorMsg) && (
+                <p className="font-body text-carnation text-sm bg-carnation-soft rounded-lg px-4 py-2">{errorMsg}</p>
               )}
-            </button>
-          </div>
-        </div>
 
-        <p className="text-center font-body text-ink-faint text-xs mt-6">작성한 편지는 선생님들께 전달됩니다</p>
+              <button
+                onClick={handleSubmit}
+                disabled={status === "loading" || eventClosed}
+                className="group w-full bg-ink text-cream-50 font-display font-bold text-lg py-3 rounded-xl shadow-letter transition-all duration-300 hover:shadow-letter-hover hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+              >
+                {eventClosed ? (
+                  <span className="text-cream text-sm">이벤트가 마감되었습니다</span>
+                ) : status === "loading" ? (
+                  <><span className="dot-flashing"><span /><span /><span /></span><span>전송 중...</span></>
+                ) : (
+                  <span className="text-cream text-sm">편지 보내기</span>
+                )}
+              </button>
+            </div>
+          </div>
+
+          <p className="text-center font-body text-ink-faint text-xs mt-6">작성한 편지는 선생님들께 전달됩니다</p>
         </div>
       </div>
     </div>

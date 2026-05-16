@@ -1,5 +1,6 @@
 import LoginButton from "@/src/components/LoginButton";
 import Footer from "@/src/components/Footer";
+import EventClosedModal from "@/src/components/EventClosedModal";
 import Image from "next/image";
 import { createClient } from "@/src/lib/supabase/server";
 import { redirect } from "next/navigation";
@@ -60,6 +61,8 @@ export default async function HomePage({ searchParams }: PageProps) {
       </div>
 
       <Footer />
+
+      <EventClosedModal />
     </main>
   );
 }
